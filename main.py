@@ -1,13 +1,12 @@
 from tkinter import *
 import os
 import subprocess as sp
-
+import py_compile
 # main window size
 HEIGHT = 500
 WIDTH = 1000
 
-# kill AHK
-os.system("TASKKILL /F /IM AutoHotkeyU64.exe")
+
 
 # fonts
 HEl12B = ['Helvetica', '12', 'bold']
@@ -68,7 +67,7 @@ def RemovefromAHK(response_name):
     f.close()
 
 #func reload AHK script and exit the program
-def reload():
+def exit():
     sp.Popen("run.bat")
     root.destroy()
 
@@ -90,10 +89,13 @@ def load_response():
 # save the text widget text to responsename.txt
 def save_response():
     if last_load_response != "":
-        with open("responses\\" + last_load_response + ".txt", 'w+') as f:
+        # kill AHK
+        os.system("TASKKILL /F /IM AutoHotkeyU64.exe")
+        with open("responses\\" + last_load_response + ".txt", 'w+', encoding="utf-8") as f:
             f.write(response_text.get("1.0", END))
         print(last_load_response + " Saved")
         label_loaded.configure(text=last_load_response + " Saved")
+        sp.Popen("run.bat")
 
 
 def delete_listbox():
@@ -161,7 +163,7 @@ response_text = Text(response_frame, font=HEl10B, bg=Cadet_Grey, fg=Oxford_Blue)
 response_save_button = Button(response_frame, text="Save", font=HEl12B, command=save_response, bd=5, activebackground=Red_Orange_Color_Wheel, fg=Oxford_Blue)
 label_loaded = Label(response_frame, text="No response loaded", font=HEl12B, bg=Mint_Green)
 
-reload_button = Button(reload_frame, text="RELOAD AND EXIT", font=HEl12B, command=reload, bd=5, activebackground=Red_Orange_Color_Wheel, fg=Oxford_Blue)
+reload_button = Button(reload_frame, text="RELOAD & EXIT", font=HEl12B, command=exit, bd=5, activebackground=Red_Orange_Color_Wheel, fg=Oxford_Blue)
 
 response_text.place(relx=0.005, rely=0.005, relwidth=.99, relheight=0.75)
 listbox.place(relx=0.005, rely=0.005, relwidth=.99, relheight=0.80)
