@@ -7,7 +7,7 @@ FileEncoding , UTF-8
 
 
 :or:hello.::
-FileRead, Clipboard, %A_ScriptDir%\responses\hello.txt
+FileRead, Clipboard, %A_ScriptDir%\responses\helloworld.txt
 Send, ^v
 return
 
